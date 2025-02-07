@@ -32,7 +32,20 @@ document.addEventListener("DOMContentLoaded",()=>{
     // saving new quotes to local storage 
     function saveQuotes() {
       
-        localStorage.setItem('quotes', JSON.stringify(quotes));
+        try {
+            localStorage.setItem('quotes', JSON.stringify(quotes));
+            let newQuote= document.getElementById('newQuoteText');
+            let category= document.getElementById('newQuoteCategory');
+            newQuote.value="";
+            category.value="";
+
+            alert("Quotes saved successfully!");
+        } catch (e) {
+            alert("Failed to save quotes.");
+            console.error("Error saving quotes: ", e);
+        }
+       
+
     }
     function loadQuotes() {
         let storedQuotesString = localStorage.getItem('quotes');
@@ -55,9 +68,7 @@ document.addEventListener("DOMContentLoaded",()=>{
             // Add the new quote object to the quotes array
             quotes.push(quoteObject);
            
-                let listItem = document.createElement("li");
-                listItem.textContent = `Quote: "${quoteObject.text}" - Category: ${quoteObject.category}`;
-                quotesdisp.appendChild(listItem);
+                
             saveQuotes();        
     
         
