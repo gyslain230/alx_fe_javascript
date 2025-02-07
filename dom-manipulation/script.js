@@ -10,7 +10,7 @@ function showRandomQuote(quotes) {
     let randomQuote = quotes[randomIndex];
 
     // Return the random quote
-    quotesdisp.textContent= `Quote: "${randomQuote.quote}"\nCategory: ${randomQuote.category}`;
+    quotesdisp.innerHTML= `Quote: "${randomQuote.quote}"\nCategory: ${randomQuote.category}`;
     //return `Quote: "${randomQuote.quote}"\nCategory: ${randomQuote.category}`;
 }
 
