@@ -2,7 +2,7 @@ const quotesdisp = document.getElementById('quoteDisplay');
 
 
 
-function getRandomQuote(quotes) {
+function showRandomQuote(quotes) {
     // Generate a random index within the range of the quotes array length
     let randomIndex = Math.floor(Math.random() * quotes.length);
 
