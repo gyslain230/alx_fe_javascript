@@ -13,6 +13,19 @@ function showRandomQuote(quotes) {
     quotesdisp.innerHTML= `Quote: "${randomQuote.quote}"\nCategory: ${randomQuote.category}`;
     //return `Quote: "${randomQuote.quote}"\nCategory: ${randomQuote.category}`;
 }
+function createAddQuoteForm(quotes, newQuote, category ) {
+  
+        // Create a new quote object
+        let quoteObject = {
+            text: newQuote,
+            category: category
+        };
+    
+        // Add the new quote object to the quotes array
+        quotes.push(quoteObject);
+
+    
+}
 
 
 
