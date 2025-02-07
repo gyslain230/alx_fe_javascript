@@ -23,6 +23,10 @@ function createAddQuoteForm(quotes, newQuote, category ) {
     
         // Add the new quote object to the quotes array
         quotes.push(quoteObject);
+       
+            let listItem = document.createElement("li");
+            listItem.textContent = `Quote: "${quoteObject.quote}" - Category: ${quoteObject.category}`;
+            quotesdisp.appendChild(listItem);
 
     
 }
