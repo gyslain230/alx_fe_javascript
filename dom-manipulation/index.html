@@ -9,13 +9,16 @@
   <h1>Dynamic Quote Generator</h1>
   <div id="quoteDisplay"></div>
   <button id="newQuote">Show New Quote</button>
+  <select id="categoryFilter"">
+    <option value="all">All Categories</option>
+    <!-- Dynamically populated categories -->
+  </select>
   <div>
     <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
     <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
     <button id="add">Add Quote</button>
   </div>
-  <button id="delete" onclick="localStorage.clear();
-alert('All quotes have been deleted!');">Delete</button>
+ 
 
   <input type="file" id="importfile" accept=".json"  />
  
