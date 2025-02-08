@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     const quotesdisp = document.getElementById('quoteDisplay');
     const button= document.getElementById('newQuote');
+    const apiUrl = 'https://67a77c4f203008941f67bc6b.mockapi.io/posts/v1/quotes';
+
+     
     let quotes = [
         { text: "The only way to do great work is to love what you do.", category: "Inspiration" },
         { text: "In the end, we will remember not the words of our enemies, but the silence of our friends.", category: "Wisdom" },
@@ -38,8 +41,10 @@ document.addEventListener("DOMContentLoaded",()=>{
         let randomQuote = quotes[randomIndex];
     
         // Return the random quote
+
         quotesdisp.innerHTML= `Quote: "${randomQuote.text}"<br>Category: ${randomQuote.category}`;
         //return `Quote: "${randomQuote.quote}"\nCategory: ${randomQuote.category}`;
+        
     }
     
     // saving new quotes to local storage 
@@ -59,14 +64,6 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
        
 
-    }
-    function loadQuotes() {
-        let storedQuotesString = localStorage.getItem('quotes');
-        let storedQuotes = JSON.parse(storedQuotesString);
-    
-          
-    
-        
     }
     
     function addQuote(quotes, newQuote, category ) {
@@ -129,13 +126,82 @@ document.addEventListener("DOMContentLoaded",()=>{
     // Filter quotes based on selected category
     function filterQuotes() {
         const dropdown = document.getElementById('categoryFilter');
-
         const selectedCategory = dropdown.value;
         localStorage.setItem('lastviewed', selectedCategory);
-        const filteredQuotes = selectedCategory === 'all' ? quotes : quotes.filter(quote => quote.category === selectedCategory);
-        console.log('Filtered Quotes:', filteredQuotes);
-        // You can display the filtered quotes as needed
+
+        let filteredQuotes = selectedCategory === 'all' ? quotes : quotes.filter(quote => quote.category === selectedCategory);
+        quotesdisp.innerHTML = '';
+        filteredQuotes.forEach(quote => {
+            quotesdisp.innerHTML += `Quote: "${quote.text}"<br>Category: ${quote.category}<br><br>`;
+        });
+        //const filteredQuotes = selectedCategory === 'all' ? quotes : quotes.filter(quote => quote.category === selectedCategory);
+        
+
+        
+        
     }
+   
+    // Function to load quotes from local storage
+    function loadQuotes() {
+        const storedQuotesString = localStorage.getItem('quotes');
+        return storedQuotesString ? JSON.parse(storedQuotesString) : [];
+    }
+
+    // Function to fetch existing quotes from MockAPI
+    async function fetchQuotesFromMockAPI() {
+        try {
+            const response = await fetch(apiUrl);
+            return response.ok ? await response.json() : [];
+        } catch (error) {
+            console.error('Error fetching quotes from MockAPI:', error);
+            return [];
+        }
+    }
+
+    // Function to sync new or changed quotes to MockAPI
+    async function syncNewQuotesToMockAPI(newQuotes) {
+        for (const quote of newQuotes) {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(quote)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                console.log('Quote synced:', data);
+            } catch (error) {
+                console.error('Error syncing quote:', error);
+            }
+        }
+    }
+
+    // Function to check for changes and sync quotes if necessary
+    async function checkAndSyncQuotes() {
+        const localQuotes = loadQuotes();
+        const remoteQuotes = await fetchQuotesFromMockAPI();
+
+        const newQuotes = localQuotes.filter(localQuote => {
+            return !remoteQuotes.some(remoteQuote => 
+                remoteQuote.text === localQuote.text && 
+                remoteQuote.category === localQuote.category
+            );
+        });
+
+        if (newQuotes.length > 0) {
+            await syncNewQuotesToMockAPI(newQuotes);
+            alert('New quotes have been synced to MockAPI.');
+        } else {
+            console.log('No new quotes to sync.');
+        }
+    }
+       
 ///////////////////////////////////////////////////////
     function importFromJsonFile(event) {
          const fileReader = new FileReader();
@@ -162,24 +228,27 @@ document.addEventListener("DOMContentLoaded",()=>{
        let newQuote= document.getElementById('newQuoteText').value;
         let category= document.getElementById('newQuoteCategory').value;
         addQuote(quotes,newQuote,category);
+        populateCategories();
+        checkAndSyncQuotes();
+
         
     });
+    
+
     
     const  dropdownfil= document.getElementById('categoryFilter').addEventListener('change',filterQuotes);
     const filesimported= document.getElementById('importfile').addEventListener('change',importFromJsonFile);
     const exportfile =document.getElementById('export-btn').addEventListener('click',exportoJsonFile);
     
     
-    
-    
-    });
-    window.onload = function() {
-        const dropdown = document.getElementById('categoryFilter');
+    const dropdown = document.getElementById('categoryFilter');
 
         const lastViewedCategory = localStorage.getItem('lastviewed');
         if (lastViewedCategory) {
             dropdown.value = lastViewedCategory;
             filterQuotes();
         }
-    };
-
+   
+    
+ });
+   
