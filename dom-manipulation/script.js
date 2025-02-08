@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     }
 
     // Function to fetch existing quotes from MockAPI
-    async function fetchQuotesFromMockAPI() {
+    async function fetchQuotesFromServer() {
         try {
             const response = await fetch(apiUrl);
             return response.ok ? await response.json() : [];
@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     // Function to check for changes and sync quotes if necessary
     async function checkAndSyncQuotes() {
         const localQuotes = loadQuotes();
-        const remoteQuotes = await fetchQuotesFromMockAPI();
+        const remoteQuotes = await fetchQuotesFromServer();
 
         const newQuotes = localQuotes.filter(localQuote => {
             return !remoteQuotes.some(remoteQuote => 
