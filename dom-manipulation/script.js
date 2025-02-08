@@ -5,15 +5,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const button= document.getElementById('newQuote');
     let quotes = [
         { text: "The only way to do great work is to love what you do.", category: "Inspirational" },
-        { text: "Your time is limited, so don’t waste it living someone else’s life.", category: "Inspirational" },
-        { text: "Happiness is not something ready-made. It comes from your own actions.", category: "Happiness" },
-        { text: "The purpose of our lives is to be happy.", category: "Happiness" },
-        { text: "Success is not the key to happiness. Happiness is the key to success.", category: "Success" },
-        { text: "The road to success and the road to failure are almost exactly the same.", category: "Success" },
-        { text: "In the end, we will remember not the words of our enemies, but the silence of our friends.", category: "Wisdom" },
-        { text: "Wisdom is not a product of schooling but of the lifelong attempt to acquire it.", category: "Wisdom" },
-        { text: "Where there is love there is life.", category: "Love" },
-        { text: "Love is composed of a single soul inhabiting two bodies.", category: "Love" }
+       
     ];
     
     
@@ -74,7 +66,7 @@ document.addEventListener("DOMContentLoaded",()=>{
         
     }
     function exportoJsonFile() {
-        document.getElementById('export-btn').addEventListener('click', function() {
+        //document.getElementById('export-btn').addEventListener('click', function() {
             // Replace this with your array of quotes
            
 
@@ -94,17 +86,22 @@ document.addEventListener("DOMContentLoaded",()=>{
 
             // Remove the link from the document
             document.body.removeChild(link);
-        });
+       // });
         
     }
 
     function importFromJsonFile(event) {
-    const fileReader = new FileReader();
-    fileReader.onload = function(event) {
-      const importedQuotes = JSON.parse(event.target.result);
-      quotes.push(...importedQuotes);
-      saveQuotes();
-      alert('Quotes imported successfully!');
+         const fileReader = new FileReader();
+        fileReader.onload = function(event) {
+            try {
+                const importedQuotes = JSON.parse(event.target.result);
+                quotes.push(...importedQuotes);
+                saveQuotes();
+                alert('Quotes imported successfully!');
+            } catch (error) {
+                alert('Failed to import quotes. Please ensure the file is in the correct format.');
+                console.error('Import error:', error);
+            }
     };
     fileReader.readAsText(event.target.files[0]);
   }
@@ -117,6 +114,8 @@ document.addEventListener("DOMContentLoaded",()=>{
         let category= document.getElementById('newQuoteCategory').value;
         addQuote(quotes,newQuote,category);
     });
+    const filesimported= document.getElementById('importfile').addEventListener('change',importFromJsonFile);
+    const exportfile =document.getElementById('export-btn').addEventListener('click',exportoJsonFile);
     
     
     
