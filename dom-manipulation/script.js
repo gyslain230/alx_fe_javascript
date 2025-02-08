@@ -73,10 +73,41 @@ document.addEventListener("DOMContentLoaded",()=>{
     
         
     }
-    function importFromJsonFile(event){
-        // Logic to import json file.
-        console.log('importFromJsonFile function called')
-      }
+    function exportToJsonFile() {
+        document.getElementById('export-btn').addEventListener('click', function() {
+            // Replace this with your array of quotes
+           
+
+            // Create a Blob from the quotes array
+            const blob = new Blob([JSON.stringify(quotes, null, 2)], { type: 'application/json' });
+
+            // Create a link element
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'quotes.json';
+
+            // Append the link to the body (required for Firefox)
+            document.body.appendChild(link);
+
+            // Programmatically click the link to trigger the download
+            link.click();
+
+            // Remove the link from the document
+            document.body.removeChild(link);
+        });
+        
+    }
+
+    function importFromJsonFile(event) {
+    const fileReader = new FileReader();
+    fileReader.onload = function(event) {
+      const importedQuotes = JSON.parse(event.target.result);
+      quotes.push(...importedQuotes);
+      saveQuotes();
+      alert('Quotes imported successfully!');
+    };
+    fileReader.readAsText(event.target.files[0]);
+  }
     button.addEventListener("click",showRandomQuote);
 
     let addingq= document.getElementById('add');
@@ -102,33 +133,33 @@ document.addEventListener("DOMContentLoaded",()=>{
     // script.js
     /*
 
-    function addQuote() {
-        // Your code to add a new quote goes here
-        console.log("addQuote function called!");
-        const newQuoteText = document.getElementById("newQuoteText").value;
-        const newQuoteCategory = document.getElementById("newQuoteCategory").value;
-        
-        if (newQuoteText.trim() && newQuoteCategory.trim()){
-          // Logic to save the quote. For now let's just display it
-          const quoteDisplay = document.getElementById("quoteDisplay");
-          const quoteElement = document.createElement('p');
-          quoteElement.textContent = `"${newQuoteText}" - ${newQuoteCategory}`;
-          quoteDisplay.appendChild(quoteElement);
+   
 
-          //Clear fields.
-           document.getElementById("newQuoteText").value = "";
-           document.getElementById("newQuoteCategory").value = "";
-        } else{
-          alert('Please enter a quote and a category');
-        }
-    }
+    <script>
+        document.getElementById('export-btn').addEventListener('click', function() {
+            // Replace this with your array of quotes
+            const quotes = [
+                { author: "Albert Einstein", quote: "Life is like riding a bicycle. To keep your balance you must keep moving." },
+                { author: "Isaac Newton", quote: "If I have seen further it is by standing on the shoulders of Giants." }
+            ];
 
-     function importFromJsonFile(event){
-       // Logic to import json file.
-       console.log('importFromJsonFile function called')
-     }
+            // Create a Blob from the quotes array
+            const blob = new Blob([JSON.stringify(quotes, null, 2)], { type: 'application/json' });
 
-    //Other js code
+            // Create a link element
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'quotes.json';
+
+            // Append the link to the body (required for Firefox)
+            document.body.appendChild(link);
+
+            // Programmatically click the link to trigger the download
+            link.click();
+
+            // Remove the link from the document
+            document.body.removeChild(link);
+        });
     */
     
     
