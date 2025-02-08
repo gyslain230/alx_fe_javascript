@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     
         
     }
-    function exportToJsonFile() {
+    function exportoJsonFile() {
         document.getElementById('export-btn').addEventListener('click', function() {
             // Replace this with your array of quotes
            
