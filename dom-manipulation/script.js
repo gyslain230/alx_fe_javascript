@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     const quotesdisp = document.getElementById('quoteDisplay');
     const button= document.getElementById('newQuote');
-    const apiUrl = 'https://67a77c4f203008941f67bc6b.mockapi.io/posts/v1/quotes';
+    //const apiUrl = 'https://67a77c4f203008941f67bc6b.mockapi.io/posts/v1/quotes';
+    const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
      
     let quotes = [
