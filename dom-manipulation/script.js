@@ -202,6 +202,33 @@ document.addEventListener("DOMContentLoaded",()=>{
             console.log('No new quotes to sync.');
         }
     }
+    function startPeriodicServerCheck(interval = 30000) { // Default interval is 30 seconds
+        setInterval(async () => {
+            console.log("Checking for new quotes from the server...");
+            const remoteQuotes = await fetchQuotesFromServer();
+            const localQuotes = loadQuotes();
+
+            // Find new quotes on the server that are not in local storage
+            const newQuotes = remoteQuotes.filter(remoteQuote => {
+                return !localQuotes.some(localQuote => 
+                    localQuote.text === remoteQuote.text && 
+                    localQuote.category === remoteQuote.category
+                );
+            });
+
+            if (newQuotes.length > 0) {
+                // Add new quotes to local storage
+                quotes.push(...newQuotes);
+                saveQuotes();
+                alert(`Found ${newQuotes.length} new quote(s) from the server!`);
+                populateCategories(); // Update categories if new ones are added
+                filterQuotes(); // Refresh the displayed quotes
+            } else {
+                console.log("No new quotes found on the server.");
+            }
+        }, interval);
+    }
+    startPeriodicServerCheck();
        
 ///////////////////////////////////////////////////////
     function importFromJsonFile(event) {
