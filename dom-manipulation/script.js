@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     const quotesdisp = document.getElementById('quoteDisplay');
     const button= document.getElementById('newQuote');
-    //const apiUrl = 'https://67a77c4f203008941f67bc6b.mockapi.io/posts/v1/quotes';
-    const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+    const apiUrl = 'https://67a77c4f203008941f67bc6b.mockapi.io/posts/v1/quotes';
+    //const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
 
      
     let quotes = [
@@ -159,8 +159,8 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     }
 
-    // Function to sync new or changed quotes to MockAPI
-    async function syncNewQuotesToMockAPI(newQuotes) {
+    // Function to sync new or changed quotes to MockAPI syncNewQuotesToMockAP
+    async function syncQuotes(newQuotes) {
         for (const quote of newQuotes) {
             try {
                 const response = await fetch(apiUrl, {
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded",()=>{
         });
 
         if (newQuotes.length > 0) {
-            await syncNewQuotesToMockAPI(newQuotes);
+            await syncQuotes(newQuotes);
             alert('New quotes have been synced to MockAPI.');
         } else {
             console.log('No new quotes to sync.');
