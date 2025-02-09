@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
         if (newQuotes.length > 0) {
             await syncQuotes(newQuotes);
-            alert('New quotes have been synced to MockAPI.');
+            alert('Quotes synced with server!');
         } else {
             console.log('No new quotes to sync.');
         }
