@@ -4,6 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dynamic Quote Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Dynamic Quote Generator</h1>
+    <div id="quoteDisplay" class="quote-display"></div>
+    <button id="newQuote" class="btn btn-primary">Show New Quote</button>
+    <select id="categoryFilter" class="category-filter">
+      <option value="all">All Categories</option>
+      <!-- Dynamically populated categories -->
+    </select>
+    <div class="add-quote-section">
+      <input id="newQuoteText" type="text" placeholder="Enter a new quote" class="input-text" />
+      <input id="newQuoteCategory" type="text" placeholder="Enter quote category" class="input-text" />
+      <button id="add" class="btn btn-secondary">Add Quote</button>
+    </div>
+    <div class="file-actions">
+      <label for="importfile" class="btn btn-import">
+        Import Quotes
+        <input type="file" id="importfile" accept=".json" class="file-input" />
+      </label>
+      <button id="export-btn" class="btn btn-export">Export Quotes</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Quote Generator</title>
 </head>
 <body>
   <h1>Dynamic Quote Generator</h1>
@@ -12,6 +49,7 @@
   <select id="categoryFilter">
     <option value="all">All Categories</option>
     <!-- Dynamically populated categories -->
+    <!--
   </select>
   <div>
     <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
@@ -26,3 +64,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+-->
